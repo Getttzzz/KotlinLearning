@@ -39,4 +39,25 @@ class ExampleUnitTest {
         println("GETZ.ExampleUnitTest.testMapAndFilterForMapDataStructure ---> " +
                 "${numbers.filterKeys { it >= 2 }}}")
     }
+
+    @Test
+    fun testAllAnyCountFind() {
+        //"all", "any", "count" and "find" are checking each element of collection and
+        // return their options if predicate and condition are equal.
+        val canBeClub27 = { m: Mem -> m.age <= 27 }
+
+        //If all elements satisfy the predicate
+        println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.all(canBeClub27)}")
+
+        //If at least one element satisfies the predicate
+        println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.any(canBeClub27)}")
+
+        //If you want to know how many elements satisfy the predicate
+        println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.count(canBeClub27)}")
+        //"count" does't create new collection, so it is effective then
+        println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.filter(canBeClub27).size}")
+
+        //If you want to get fist element which satisfies the predicate
+        println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.find(canBeClub27)}")
+    }
 }
