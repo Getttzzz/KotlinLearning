@@ -61,8 +61,59 @@ class ExampleUnitTest {
         println("GETZ.ExampleUnitTest.testAllAnyCountFind ---> ${memes.find(canBeClub27)}")
     }
 
+    /**
+     *  5.4 Using functional interfaces of Java
+     *
+     *  SAM - Single Abstract Method interface (interface with one method)
+     * */
+
     @Test
-    fun tramParamINetYego(){
+    fun testLambda() {
+        //each time this method will create new instance of lambda
+        callUsingObject() //$1@6f2b958e
+        callUsingObject() //$1@1eb44e46
+
+        //lambda instance was the same, it reused.
+        callLambdaAsArgument() //$1@6504e3b2
+        callLambdaAsArgument() //$1@6504e3b2
+
+        //lambda with one parameter creates new instance each call
+        callLambdaWithParameter(1234) //$1@515f550a
+        callLambdaWithParameter(1234) //$1@626b2d4a
+    }
+
+    private fun callLambdaAsArgument() {
+        val lambda = Runnable {
+            println("GETZ.ExampleUnitTest.testLambda ---> callLambdaAsArgument")
+        }
+        println("GETZ.ExampleUnitTest.callLambdaAsArgument ---> lambda=$lambda")
+        postponeComputation(1000, lambda)
+    }
+
+    private fun callLambdaWithParameter(number: Int) {
+        val lambda = Runnable {
+            println("GETZ.ExampleUnitTest.testLambda ---> callLambdaWithParameter number=$number")
+        }
+        println("GETZ.ExampleUnitTest.callLambdaWithParameter ---> lambda=$lambda")
+        postponeComputation(1000, lambda)
+    }
+
+    private fun callUsingObject() {
+        val l = object : Runnable {
+            override fun run() {
+                println("GETZ.ExampleUnitTest.run ---> ")
+            }
+        }
+        println("GETZ.ExampleUnitTest.callUsingObject ---> l=$l")
+        postponeComputation(1000, l)
+    }
+
+    private fun postponeComputation(int: Int, runnable: Runnable) {
+        println("GETZ.ExampleUnitTest.postponeComputation ---> int=$int")
+    }
+
+    @Test
+    fun tramParamINetYego() {
         //построить из этого строку аж до миллиарда
         /*
 
