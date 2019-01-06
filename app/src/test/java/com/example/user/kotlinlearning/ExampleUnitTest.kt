@@ -1,7 +1,10 @@
 package com.example.user.kotlinlearning
 
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Mem(val name: String, val age: Int)
 
@@ -112,97 +115,159 @@ class ExampleUnitTest {
         println("GETZ.ExampleUnitTest.postponeComputation ---> int=$int")
     }
 
+    /**
+     * Try to cast
+     * */
+
     @Test
-    fun tramParamINetYego() {
-        //построить из этого строку аж до миллиарда
-        /*
+    fun castingObj() {
 
-            первую
+        val arrayOfHashMaps = arrayListOf<List<String>>()
+                .also {
+                    val photoInfo = arrayListOf<String>()
+//                    photoInfo["name"] = 1234
+//                    photoInfo["surname"] = 2345
+                    photoInfo.add("ASD")
+                    photoInfo.add("SDF")
+                    photoInfo.add("FGH")
+                    it.add(photoInfo)
+                }
 
-            из первой во вторую
-            из второй в третью
-            из третьей в четвертую
-            из четвертой в пятую
-            из пятой в шестую
-            из шестой в седьмую
-            из восьмой в девятую
-            из девятой в десятую
-            из десятой в одиннадцатую
+        val examples = hashMapOf<Any?, Any?>(Pair("first", arrayOfHashMaps))
+        val unknownType = examples["first"]
 
-            из одиннадцатой в двенадцатую
-            из двенадцатой в тринадцатую
-            из тринадцатой в четырнадцатую
-            из четырнадцатой в пятнадцатую
-            из пятнадцатой в шестнадцатую
-            из шестнадцатой в семнадцатую
-            из семнадцатой в восемьнадцатую
-            из восемьнадцатой и девятнадцатую
-            из девятнадцатой в двадцатую
+        if (unknownType is List<*>) {
+//            val castedList = unknownType as List<HashMap<String, String>>
+//            println("GETZ.ExampleUnitTest.castingObj ---> casted! key=${castedList[0]["name"]}  unknownType=$castedList")
 
-            из двадцатой в двадцать первую
-            из двацать первой в двадцать вторую
-            из двадцать второй в двадцать третью
-            из двадцать третьей в двадцать четвертую
+            val castedList = unknownType.asListOfType<List<List<Int>>>()
+            println("GETZ.ExampleUnitTest.castingObj ---> casted! castedList=$castedList")
 
-        */
+        } else {
+            println("GETZ.ExampleUnitTest.castingObj ---> not casted( ")
+        }
 
-        val какую = arrayListOf(
-                "первую",
-                "вторую",
-                "третью",
-                "четвертую",
-                "пятую",
-                "шестую",
-                "седьмую",
-                "восьмую",
-                "девятую")
+        Assert.assertEquals(1, 1)
+    }
 
-        val какой = arrayListOf(
-                "первой",
-                "второй",
-                "третьей",
-                "четвертой",
-                "пятой",
-                "шестой",
-                "седьмой",
-                "восьмой",
-                "девятой")
+    @Test
+    fun startsWithTest() {
+        val str = "asdf"
+        val a = str.let {
+            return@let it + "qwer"
+        }
 
-        val десяткиКакую = arrayListOf(
-                "десять",
-                "двадцать",
-                "тридцать",
-                "сорок",
-                "пятдесят",
-                "шистдесят",
-                "семдесят",
-                "восемьдесят",
-                "девяносто")
+        val str1 = "asdf11111"
 
-        val сотки = arrayListOf(
-                "сто",
-                "двесте",
-                "триста",
-                "четыреста",
-                "пятьсот",
-                "шестьсот",
-                "семьсот",
-                "восемьсот",
-                "девятсот"
+        val asdf = str1.also {
+            return@also
+        }
+        println("GETZ.ExampleUnitTest.startsWithTest ---> str=$str a=$a")
+        println("GETZ.ExampleUnitTest.startsWithTest ---> str=$str1 a=$a")
+    }
+
+
+//    Given nums = [2, 7, 11, 15], target = 9,
+//    Because nums[0] + nums[1] = 2 + 7 = 9,
+//    return [0, 1].
+
+    @Test
+    fun strangeSum() {
+        val nums = arrayOf(2, 7, 11, 15)
+        val target = 9
+
+        val result: Array<Int> = twoSum(nums, target)
+    }
+
+    private fun twoSum(arr: Array<Int>, target: Int): Array<Int> {
+        for (i in arr.indices) {
+            println("GETZ.ExampleUnitTest.twoSum ---> i=$i")
+            val currentElement = arr[i]
+            for (j in arr.indices) {
+                if (i == j) continue
+                if (currentElement + arr[j] == target) {
+                    println("GETZ.ExampleUnitTest.twoSum ---> i=$i j=$j")
+                    return arrayOf(i, j)
+                }
+            }
+        }
+        return arrayOf(0)
+    }
+
+
+    @Test
+    fun howToReturnRelevantViewType() {
+
+        val massages = arrayListOf<Msg>(
+                Msg("hi", SimpleDateFormat("dd-MM-yyyy").parse("01-12-2018")),
+                Msg("how are you", SimpleDateFormat("dd-MM-yyyy").parse("01-12-2018")),
+                Msg("wtf??", SimpleDateFormat("dd-MM-yyyy").parse("01-12-2018")),
+                Msg("you are pulling my let)))", SimpleDateFormat("dd-MM-yyyy").parse("02-12-2018")),
+                Msg("no way!!", SimpleDateFormat("dd-MM-yyyy").parse("03-12-2018"))
+
         )
 
-        val тысячи = arrayListOf(
-                "одна тысяча",
-                "две тысячи",
-                "три тысячи",
-                "четыре тысячи",
-                "пять тысяч",
-                "шесть тысяч",
-                "семь тысяч",
-                "восемь тысяч",
-                "девять тысяч"
-        )
+        val results = arrayListOf<CommonMsg>()
 
-        //ya zaebalsja, slishkom dolgo...
+        //todo add date class to the hole list of msg
+        //todo filter it base on classes.
+
+        if (massages.isNotEmpty()) {
+
+            results.add(Dt(massages[0].date))
+
+            var firstElementToCompare: Msg? = null
+            massages.forEachIndexed { index, msg ->
+                firstElementToCompare = msg
+                val currentMsg = msg
+                var nextMsg: Msg? = null
+                val iterator = massages.iterator()
+                if (iterator.hasNext()) {
+                    nextMsg = iterator.next()
+                }
+                if (nextMsg != null) {
+                    if (currentMsg.date == nextMsg.date) {
+                        results.add(currentMsg)
+
+                        return@forEachIndexed
+                    } else {
+
+                    }
+                } else {
+                    println("GETZ.ExampleUnitTest.howToReturnRelevantViewType ---> next element is null, oops")
+                }
+            }
+        }
+
+    }
+
+}
+
+
+data class Msg(val msg: String, val date: Date) : CommonMsg {
+    override fun getMsgDate(): Date {
+        return date
     }
 }
+
+data class Dt(val date: Date) : CommonMsg {
+    override fun getMsgDate(): Date {
+        return date
+    }
+}
+
+interface CommonMsg {
+    fun getMsgDate(): Date
+}
+
+
+inline fun <reified T> List<*>.asListOfType(): List<T>? =
+        if (all {
+                    println("GETZ.<top>.asListOfType ---> it=$it")
+                    it is T
+                }) {
+            println("GETZ.<top>.asListOfType ---> this=$this")
+            @Suppress("UNCHECKED_CAST")
+            this as List<T>
+        } else
+            null
