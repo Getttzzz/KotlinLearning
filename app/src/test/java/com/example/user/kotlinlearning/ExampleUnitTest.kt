@@ -241,6 +241,19 @@ class ExampleUnitTest {
 
     }
 
+
+    @Test
+    fun intersectionOfTwoLists() {
+
+        val listOne = listOf<Int>(1, 2, 3, 4, 5, 6, 7)
+        val listTwo = listOf<Int>(6, 7, 8, 8, 8, 8)
+
+        val intersect = listOne.intersect(listTwo.asIterable())
+
+        val result = listOne.sameContentWith(listTwo)
+        println("GETZ.ExampleUnitTest.intersectionOfTwoLists ---> result=$result intersect=$intersect")
+
+    }
 }
 
 
@@ -260,6 +273,12 @@ interface CommonMsg {
     fun getMsgDate(): Date
 }
 
+infix fun <T> Collection<T>.sameContentWith(collection: Collection<T>?) =
+        collection?.let {
+
+            this.intersect(collection.asIterable()).isNotEmpty()
+
+        }
 
 inline fun <reified T> List<*>.asListOfType(): List<T>? =
         if (all {
