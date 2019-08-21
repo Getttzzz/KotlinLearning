@@ -8,6 +8,9 @@ import java.util.*
 
 data class Mem(val name: String, val age: Int)
 
+
+//todo Reorder all methods. Perhaps, it will move to diff classes...
+
 class ExampleUnitTest {
 
     private val digits = listOf(1, 2, 3, 4)
@@ -114,6 +117,116 @@ class ExampleUnitTest {
     private fun postponeComputation(int: Int, runnable: Runnable) {
         println("GETZ.ExampleUnitTest.postponeComputation ---> int=$int")
     }
+
+    /**
+     * 5.4.2 SAM-constructors
+     *
+     * There is no way to get "this" link from lambda.
+     * Lambda is not an object. We can't interact with lambda like with object.
+     * From compiler point of view a lambda is a piece of code and that's all.
+     * */
+    @Test
+    fun theSAMConstructors() {
+        createAllDoneRunnable().run()
+        createAllDoneRunnableAnonymous().run()
+
+
+    }
+
+    fun createAllDoneRunnable(): Runnable {
+        return Runnable { println("GETZ.ExampleUnitTest.createAllDoneRunnable ---> this is runnable") }
+    }
+
+    fun createAllDoneRunnableAnonymous(): Runnable {
+        return object : Runnable {
+            override fun run() {
+                println("GETZ.ExampleUnitTest.run ---> ")
+            }
+        }
+    }
+
+
+    /**
+     * 5.5 Lambda with consumers: "with" and "apply" functions.
+     *
+     * "With" helps us to execute some operations using the same object
+     * without repeating yourself.
+     * */
+    @Test
+    fun lambdaWithConsumers() {
+        val result = alphabet()
+        println("GETZ.ExampleUnitTest.lambdaWithConsumers ---> alphabet=$result")
+        val resultImproved = alphabetUsingWithFunc()
+        println("GETZ.ExampleUnitTest.lambdaWithConsumers ---> alphabetImproved=$resultImproved")
+    }
+
+    fun alphabet(): String {
+        val sb = StringBuilder()
+        return with(sb) {
+            for (letter in 'A'..'Z') {
+                this.append(letter)
+            }
+            append("\nNow I know the alphabet!!")
+            this.toString()
+        }
+    }
+
+    /**
+     * Inside "with" I can skip key word "this".
+     * */
+    fun alphabetUsingWithFunc() = with(StringBuilder()) {
+        for (letter in 'A'..'Z') {
+            append(letter)
+        }
+        append("\nNow I know the alphabet!!")
+        toString()
+    }
+
+    /**
+     * 5.5.2 Function "apply"
+     *
+     * The "apply" func always returns object that it gets before.
+     * */
+    @Test
+    fun testApplyFunction() {
+        val result = alphabetUsingApplyFunc()
+        println("GETZ.ExampleUnitTest.testApplyFunction ---> result=$result")
+    }
+
+    fun alphabetUsingApplyFunc() = StringBuilder().apply {
+        for (l in 'A'..'Z') {
+            append(l)
+        }
+        append("\nNow I've known the alphabet!11")
+    }.toString()
+
+
+    /**
+     * 8.1 High order function.
+     * High order function it's function which gets as an argument another function or lambda.
+     * For example: list.filer{ x>0 }
+     *
+     * 8.1.1 Functions types.
+     * */
+    fun typesOfFunctions() {
+        val sum = { x: Int, y: Int ->
+            println("GETZ.ExampleUnitTest.typesOfFunctions ---> last line is returning statement")
+            x + y
+        }
+        val action = { println("GETZ.ExampleUnitTest.typesOfFunctions ---> ") }
+        var canReturnNull: (Int, Int) -> Int? = { _, _ -> null }
+        var funOrNull: ((Int, Int) -> Int)? = null //var can be null (nullable)
+        performRequest("https://hatersgonnahate.com") { code, content ->
+            println("GETZ.ExampleUnitTest.typesOfFunctions ---> piece of code")
+        }
+
+    }
+
+    fun performRequest(url: String, callback: (code: Int, content: String) -> Unit) {
+        callback.invoke(12, "dsf")
+    }
+
+
 
     /**
      * Try to cast
